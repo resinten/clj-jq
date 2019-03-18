@@ -5,6 +5,21 @@
 A Clojure library designed to make working with JSON objects simpler and faster.
 This wraps the `jq` native library that is provided by com.arakelian/java-jq.
 
+### Leiningen
+
+```[me.bwest/clj-jq "1.0.0"]```
+
+### Maven
+
+```
+<dependency>
+  <groupId>me.bwest</groupId>
+  <artifactId>clj-jq</artifactId>
+  <version>1.0.0</version>
+</dependency>
+```
+
+
 ## Usage
 
 Very simply, 4 methods are provided
@@ -34,3 +49,17 @@ to do that. You could do that directly with the `jq` query string, though.
 
 This also exposes `jq/read` which is just an alias of `(clojure.data.json/read-str x :key-fn keyword)`
 and `jq/write`, which just aliases `clojure.data.json/write-str`
+
+If you want to map an incoming JSON message to some consistently structured map, `jq` can do that:
+
+```
+(jq/query json-str "{\"id\": .inbound.payload.messageId, \"url\": .inbound.payload.docUrl, \"date\": .metadata.originDate}")
+```
+
+This will yield a map with the structure:
+
+```
+{:id <id> :url <url> :date <date>}
+```
+
+Values can then be mapped further into specialized data types using normal Clojure functions.
