@@ -1,4 +1,5 @@
 (ns clj-jq.core
+  (:refer-clojure :exclude [read])
   (:require [clojure.data.json :as json]))
 
 (def native-jq-library (com.arakelian.jq.ImmutableJqLibrary/of))
